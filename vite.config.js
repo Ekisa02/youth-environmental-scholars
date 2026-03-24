@@ -19,7 +19,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
+    // Remove terser and use esbuild (default)
+    minify: 'esbuild', // Change from 'terser' to 'esbuild'
     rollupOptions: {
       output: {
         manualChunks: {
@@ -28,5 +29,8 @@ export default defineConfig({
         },
       },
     },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
   },
 })
