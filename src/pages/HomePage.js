@@ -31,7 +31,7 @@ const HomePage = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 bg-gradient-to-r from-primary-700 to-primary-500 bg-clip-text text-transparent"
           >
-            Youth Environmental Scholars
+            Youth Environmental <span className="text-purple-500">Scholars</span>
           </motion.h1>
           
           <motion.p
@@ -49,10 +49,10 @@ const HomePage = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link to="/membership" className="btn-primary inline-block">
+            <Link to="/membership" className="btn-primary inline-block bg-gradient-to-r from-purple-500 to-primary-700 text-white">
               Join Us
             </Link>
-            <Link to="/about" className="btn-secondary inline-block">
+            <Link to="/about" className="btn-secondary inline-block bg-gradient-to-r from-primary-500 to-purple-500 text-white">
               Learn More
             </Link>
           </motion.div>

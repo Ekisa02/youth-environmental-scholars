@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaFacebook, FaTwitter, FaTiktok, FaEnvelope, FaInstagram } from 'react-icons/fa';
+import logo from '../assets/images/logo.jpeg';
 
 const Footer = () => {
   const socialLinks = [
@@ -18,8 +19,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-2xl font-heading font-bold mb-4 flex items-center space-x-2">
-              <span>🌱</span>
-              <span>YES</span>
+              <img 
+                src={logo}
+                alt="YES Logo"
+                className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-full"
+              />
+              <span className='text-purple-500'>Youth Environmental Scholars</span>
             </h3>
             <p className="text-gray-300">
               Empowering youth to lead climate action, innovation, and sustainable change.
