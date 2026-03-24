@@ -46,13 +46,13 @@ const ContactPage = () => {
     {
       icon: FaTwitter,
       label: 'Twitter',
-      value: '@YEScholars',
+      value: '@Youth Environmental Scholars',
       link: 'https://twitter.com',
     },
     {
       icon: FaTiktok,
       label: 'TikTok',
-      value: '@yescholars',
+      value: '@Youth Environmental Scholars',
       link: 'https://tiktok.com',
     },
   ];
@@ -202,11 +202,11 @@ const ContactPage = () => {
                   <div className="p-6">
                     <div className="flex items-center space-x-3 mb-3">
                       <FaMapMarkerAlt className="text-primary-600" />
-                      <p className="text-gray-700">Nairobi, Kenya</p>
+                      <p className="text-gray-700">Eldoret, Kenya</p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <FaPhone className="text-primary-600" />
-                      <p className="text-gray-700">+254 700 000 000</p>
+                      <p className="text-gray-700">+254 740 433099</p>
                     </div>
                   </div>
                 </div>
