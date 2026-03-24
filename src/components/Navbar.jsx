@@ -37,18 +37,16 @@ const Navbar = () => {
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-2 md:space-x-3 group">
             <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
               className="relative"
             >
-              {/* Your PNG Logo */}
               <img 
                 src={logo}
                 alt="YES Logo"
                 className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full"
               />
-              {/* Animated ring effect around logo */}
               <motion.div
                 className="absolute inset-0 rounded-full border-2 border-primary-500"
                 initial={{ scale: 1, opacity: 0.5 }}
@@ -57,12 +55,11 @@ const Navbar = () => {
               />
             </motion.div>
             
-            {/* Organization Name */}
             <div className="flex flex-col">
-              <span className="text-style-bold text-sm md:text-lg lg:text-xl font-heading font-bold bg-gradient-to-r from-primary-700 to-primary-500 bg-clip-text text-transparent leading-tight">
+              <span className="text-sm md:text-lg lg:text-xl font-heading font-bold bg-gradient-to-r from-primary-700 to-purple-700 bg-clip-text text-transparent leading-tight">
                 Youth Environmental
               </span>
-              <span className=" text-purple-500 text-sm md:text-lg lg:text-xl font-heading font-bold bg-gradient-to-r from-primary-700 to-primary-500 bg-clip-text text-transparent leading-tight">
+              <span className="text-sm md:text-lg lg:text-xl font-heading font-bold bg-gradient-to-r from-purple-700 to-purple-500 bg-clip-text text-transparent leading-tight">
                 Scholars
               </span>
             </div>
@@ -98,7 +95,7 @@ const Navbar = () => {
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Toggle menu"
           >
-            {isOpen ? <XMarkIcon className="w-6 h-6 color-purple-500" /> : <Bars3Icon className="w-6 h-6" />}
+            {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
           </button>
         </div>
 

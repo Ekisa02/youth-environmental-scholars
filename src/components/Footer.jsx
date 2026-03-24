@@ -18,14 +18,14 @@ const Footer = () => {
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-heading font-bold mb-4 flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-4">
               <img 
                 src={logo}
                 alt="YES Logo"
-                className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-full"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full"
               />
-              <span className='text-purple-500'>Youth Environmental Scholars</span>
-            </h3>
+              <h3 className="text-2xl font-heading font-bold">YES</h3>
+            </div>
             <p className="text-gray-300">
               Empowering youth to lead climate action, innovation, and sustainable change.
             </p>

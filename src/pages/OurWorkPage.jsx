@@ -48,7 +48,7 @@ const OurWorkPage = () => {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-heading font-bold mb-6"
+              className="text-4xl md:text-5xl font-heading font-bold mb-6 bg-gradient-to-r from-white to-purple-700 bg-clip-text text-transparent"
             >
               Our Work
             </motion.h1>
