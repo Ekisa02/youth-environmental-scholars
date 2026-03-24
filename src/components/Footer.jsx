@@ -45,8 +45,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <p className="text-gray-300 mb-2">📧 youthenvironmentalscholar@gmail.com</p>
-            <p className="text-gray-300 mb-2">📍 Nairobi, Kenya</p>
-            <p className="text-gray-300">📞 +254 700 000 000</p>
+            <p className="text-gray-300 mb-2">📍 Eldoret, Kenya</p>
+            <p className="text-gray-300">📞 +254 740 433099</p>
           </div>
           
           <div>
