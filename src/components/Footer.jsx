@@ -6,10 +6,10 @@ import logo from '../assets/images/logo.jpeg';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: FaFacebook, href: 'https://facebook.com', label: 'Facebook', color: 'hover:bg-blue-600' },
-    { icon: FaTwitter, href: 'https://twitter.com', label: 'Twitter', color: 'hover:bg-blue-400' },
+    { icon: FaFacebook, href: 'https://www.facebook.com/profile.php?id=61580688276090&sk=directory_links', label: 'Facebook', color: 'hover:bg-blue-600' },
+    { icon: FaTwitter, href: 'https://x.com/YouthEnvSholars', label: 'Twitter', color: 'hover:bg-blue-400' },
     { icon: FaInstagram, href: 'https://instagram.com', label: 'Instagram', color: 'hover:bg-pink-600' },
-    { icon: FaTiktok, href: 'https://tiktok.com', label: 'TikTok', color: 'hover:bg-black' },
+    { icon: FaTiktok, href: 'https://vm.tiktok.com/ZS9RuQYTYrRmv-ylz7t/', label: 'TikTok', color: 'hover:bg-black' },
     { icon: FaEnvelope, href: 'mailto:youthenvironmentalscholar@gmail.com', label: 'Email', color: 'hover:bg-red-600' },
   ];
 
@@ -24,7 +24,7 @@ const Footer = () => {
                 alt="YES Logo"
                 className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full"
               />
-              <h3 className="text-2xl font-heading font-bold">YES</h3>
+              <h3 className="text-2xl font-heading font-bold">Youth Environmental Scholars</h3>
             </div>
             <p className="text-gray-300">
               Empowering youth to lead climate action, innovation, and sustainable change.
