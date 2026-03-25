@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@vercel/postgres": "^0.10.0",
     "framer-motion": "^10.16.16",
+    "pg": "^8.20.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",

@@ -1,116 +1,93 @@
 // src/context/BlogContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
+import * as db from '../lib/db';
 
 export const BlogContext = createContext();
-
-const STORAGE_KEY = 'yes_blog_posts';
 
 export const BlogProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Load posts from localStorage on initial load
+  // Load posts from database
   useEffect(() => {
     loadPosts();
     checkAuth();
   }, []);
 
-  const loadPosts = () => {
+  const loadPosts = async () => {
     try {
-      const savedPosts = localStorage.getItem(STORAGE_KEY);
-      if (savedPosts) {
-        setPosts(JSON.parse(savedPosts));
-      } else {
-        // Add initial welcome post
-        const initialPosts = [
-          {
-            id: Date.now(),
-            title: "Welcome to Youth Environmental Scholars Blog",
-            content: `We are excited to launch our blog platform! This space will serve as a hub for sharing knowledge, stories, and insights about environmental conservation and climate action.
-
-## What to Expect
-
-- **Research Findings**: Latest studies and discoveries in environmental science
-- **Success Stories**: Inspiring tales from our community projects
-- **Youth Voices**: Perspectives from young environmental leaders
-- **Tips & Guides**: Practical advice for sustainable living
-
-## Get Involved
-
-We encourage all members to contribute articles, share experiences, and engage with our content. Together, we can make a difference!
-
-*Stay tuned for more exciting content coming soon.*`,
-            excerpt: "Welcome to our new blog platform! Here we'll share stories, research, and insights about environmental conservation and climate action.",
-            author: "YES Admin",
-            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-            category: "Announcement",
-            featured: true,
-            readTime: "3 min read",
-            views: 0,
-            image: null
-          }
-        ];
-        setPosts(initialPosts);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initialPosts));
-      }
+      setLoading(true);
+      const allPosts = await db.getAllPosts();
+      setPosts(allPosts);
     } catch (error) {
       console.error('Error loading posts:', error);
+      alert('Failed to load posts. Please refresh the page.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Save posts to localStorage whenever they change
-  useEffect(() => {
-    if (posts.length > 0 && !loading) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  const addPost = async (post) => {
+    try {
+      const readTime = calculateReadTime(post.content);
+      const newPost = await db.createPost({
+        ...post,
+        readTime,
+        author: 'Admin'
+      });
+      
+      setPosts([newPost, ...posts]);
+      alert('✅ Post published successfully!');
+      return newPost;
+    } catch (error) {
+      console.error('Error adding post:', error);
+      alert('❌ Failed to publish post. Please try again.');
     }
-  }, [posts, loading]);
-
-  const addPost = (post) => {
-    const newPost = {
-      ...post,
-      id: Date.now(),
-      date: new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      }),
-      views: 0,
-      readTime: calculateReadTime(post.content)
-    };
-    setPosts(prevPosts => [newPost, ...prevPosts]);
-    return newPost;
   };
 
-  const updatePost = (id, updatedPost) => {
-    setPosts(prevPosts => prevPosts.map(post => 
-      post.id === id ? { 
-        ...post, 
-        ...updatedPost, 
-        date: new Date().toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        }),
-        readTime: calculateReadTime(updatedPost.content)
-      } : post
-    ));
-  };
-
-  const deletePost = (id) => {
-    if (window.confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
-      setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
-      return true;
+  const updatePost = async (id, updatedPost) => {
+    try {
+      const readTime = calculateReadTime(updatedPost.content);
+      const updated = await db.updatePost(id, {
+        ...updatedPost,
+        readTime
+      });
+      
+      setPosts(posts.map(post => 
+        post.id === id ? updated : post
+      ));
+      alert('✅ Post updated successfully!');
+    } catch (error) {
+      console.error('Error updating post:', error);
+      alert('❌ Failed to update post. Please try again.');
     }
-    return false;
   };
 
-  const incrementViews = (id) => {
-    setPosts(prevPosts => prevPosts.map(post => 
-      post.id === id ? { ...post, views: (post.views || 0) + 1 } : post
-    ));
+  const deletePost = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      await db.deletePost(id);
+      setPosts(posts.filter(post => post.id !== id));
+      alert('✅ Post deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert('❌ Failed to delete post. Please try again.');
+    }
+  };
+
+  const incrementViews = async (id) => {
+    try {
+      await db.incrementViews(id);
+      setPosts(posts.map(post => 
+        post.id === id ? { ...post, views: (post.views || 0) + 1 } : post
+      ));
+    } catch (error) {
+      console.error('Error incrementing views:', error);
+    }
   };
 
   const calculateReadTime = (content) => {
@@ -121,9 +98,7 @@ We encourage all members to contribute articles, share experiences, and engage w
   };
 
   const login = (password) => {
-    // Admin password
-    const adminPassword = 'yes_admin_2025';
-    if (password === adminPassword) {
+    if (password === 'yes_admin_2025') {
       setIsAuthenticated(true);
       localStorage.setItem('blog_auth', 'true');
       return true;
@@ -143,34 +118,6 @@ We encourage all members to contribute articles, share experiences, and engage w
     }
   };
 
-  const getPostById = (id) => {
-    return posts.find(post => post.id === parseInt(id));
-  };
-
-  const getPostsByCategory = (category) => {
-    if (category === 'All') return posts;
-    return posts.filter(post => post.category === category);
-  };
-
-  const getFeaturedPosts = () => {
-    return posts.filter(post => post.featured);
-  };
-
-  const getRecentPosts = (limit = 5) => {
-    return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, limit);
-  };
-
-  const searchPosts = (query) => {
-    if (!query) return posts;
-    const lowerQuery = query.toLowerCase();
-    return posts.filter(post => 
-      post.title.toLowerCase().includes(lowerQuery) ||
-      post.content.toLowerCase().includes(lowerQuery) ||
-      post.excerpt?.toLowerCase().includes(lowerQuery) ||
-      post.category?.toLowerCase().includes(lowerQuery)
-    );
-  };
-
   return (
     <BlogContext.Provider value={{
       posts,
@@ -181,11 +128,6 @@ We encourage all members to contribute articles, share experiences, and engage w
       deletePost,
       login,
       logout,
-      getPostById,
-      getPostsByCategory,
-      getFeaturedPosts,
-      getRecentPosts,
-      searchPosts,
       incrementViews
     }}>
       {children}
